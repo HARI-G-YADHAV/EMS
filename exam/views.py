@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from .models import UserProfile
 from .models import *
 from datetime import datetime
 from django.views.generic.edit import CreateView
@@ -11,26 +10,42 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import Group,User
 @csrf_exempt
 def mylogin(request):
-     if request.method == 'POST':
+    if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            user_type = user.userprofile.user_type
-            if user_type == 'chief':
-                return redirect('chief_dashboard')
-            elif user_type == 'teacher':
-                return redirect('teacher_dashboard')
-            elif user_type == 'staff':
-                return redirect('staff_dashboard')
-            elif user_type == 'admin':
-                return redirect('/admin/')
-            messages.success(request, 'Login successful!')
+
+            # Check user's groups
+            groups = user.groups.all()
+
+            if groups.exists():
+                group_names = [group.name for group in groups]
+
+                # Debugging: print group names
+                print(f"User {username} belongs to groups: {group_names}")
+
+                # Redirect based on group membership
+                if 'Chief' in group_names:
+                    return redirect('chief_dashboard')
+                elif 'Teacher' in group_names:
+                    return redirect('teacher_dashboard')
+                elif 'Office' in group_names:
+                    return redirect('staff_dashboard')
+                elif 'Admin' in group_names:
+                    return redirect('/admin/')
+                else:
+                    messages.error(request, 'You do not belong to any group.')
+            else:
+                messages.error(request, 'You do not belong to any group.')
         else:
             messages.error(request, 'Invalid username or password.')
-     return render(request, 'exam/login.html')
+            print("Invalid login credentials")  # Debugging line
+
+    return render(request, 'exam/login.html')
+
 
 def chief_dashboard(request):
     return render(request, 'exam/chief.html')
