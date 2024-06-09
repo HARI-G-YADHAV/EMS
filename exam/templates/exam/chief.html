@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Exam Management System Chief</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,53 +14,83 @@
         }
 
         header {
-            background-color: #16071d; /* Green header background */
+            background-color: #16071d; /* Dark purple header background */
             padding: 15px;
             text-align: center;
             color: #fff; /* White header text color */
         }
 
         nav {
-            background-color: #c4b9c3; /* Dark gray navigation bar background */
-            padding: 10px 0;
-            text-align: center;
+            display: flex;
+            flex-direction: column; /* Arrange the navigation links vertically */
+            align-items: center; /* Center the links horizontally */
+            margin-top: 40px; /* Add some space between the header and the nav */
         }
 
         nav a {
-            display: inline-block;
-            margin: 0 20px;
-            padding: 10px 15px;
+            display: block;
+            width: 200px; /* Fixed width for links */
+            margin: 10px 0; /* Vertical margin between links */
+            padding: 20px;
             text-decoration: none;
             color: #fff; /* White link text color */
             background-color: #4CAF50; /* Green link background color */
-            border-radius: 5px; /* Rounded corners */
-            transition: background-color 0.3s ease; /* Smooth transition effect */
+            border-radius: 10px; /* Rounded corners */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition effect */
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+            overflow: hidden; /* Hide overflowing box shadow */
+            background: linear-gradient(145deg, #4CAF50, #388E3C); /* Gradient background */
         }
 
         nav a:hover {
             background-color: #45a049; /* Darker green on hover */
+            transform: translateY(-5px); /* Move up slightly on hover */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increase shadow size on hover */
         }
 
         h1 {
             text-align: center;
             margin-top: 40px; /* Add some space between the header and the content */
+            font-size: 2.5em;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.5em;
+            color: #ddd;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center; /* Center the container contents */
+            align-items: center;
+            height: calc(100vh - 100px); /* Full height minus header and nav height */
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Exam Management System Chief</main></h1>
+        <h1>Exam Management System</h1>
+        <h2>CHIEF DASHBOARD</h2>
     </header>
-    
+
     <nav>
-        <a href="{% url 'exam' %}">Exam Page</a>
-        <a href="{% url 'cpage' %}">Time Table</a> 
-        <a href="{% url 'allot' %}">allot</a> 
-        <a href="{% url 'logout' %}">logout</a>
-        
+        <a href="/upload_time_table">Exam Page</a>
+        <a href="{% url 'allot' %}">
+            Preferences
+        </a>
+        <a href="{% url 'cpage' %}">
+            Allot
+        </a>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
     </nav>
 
-    <!-- Your existing content goes here -->
-
+    <div class="container">
+        <!-- Your existing content goes here -->
+    </div>
 </body>
 </html>

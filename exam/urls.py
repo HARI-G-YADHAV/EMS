@@ -5,7 +5,6 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('',views.mylogin,name='login'),
     path('logout/',auth_views.LogoutView.as_view(),name='logout'),
-    path('home/',views.home,name='hello'),
     path('exam/',views.ExamView.as_view(),name='exam'),
     path('timetable/',views.ExamTimeTableView.as_view(),name='timetable'),
     path('duty/',views.dutyAllotmentView.as_view(),name='dutyAllotment'),
@@ -16,6 +15,9 @@ urlpatterns = [
     path('tbstore',views.tbstore,name='tbstore'),
     path('timetb',views.prefer,name='timetb'),
     path('opted',views.opted,name='opted'),
-    path('allot',views.allot,name='allot')
+    path('allot',views.allot,name='allot'),
+    path('chief_dashboard/',views.chief_dashboard,name='chief_dashboard'),
+    path('upload_time_table', views.upload_time_table, name='upload_time_table'),
+    path('office/', views.office, name='office'),
 ]
 

@@ -148,3 +148,12 @@ def allot(request):
         }
         return render(request,'exam/allot.html',{**teachers,**selected_date})
     return render(request,'exam/allot.html',choices)
+
+def chief_dashboard(request):
+    return render(request,"exam/chief.html")
+
+def upload_time_table(request):
+    return render(request, 'exam/upload_time_table.html')
+
+def office(request):
+    return render(request,"exam/office.html")

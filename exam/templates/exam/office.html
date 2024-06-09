@@ -3,65 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Office Module - Examination Management System</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8; /* Light gray background */
-            color: #333; /* Dark gray text color */
         }
 
-        header {
-            background-color: #4CAF50; /* Green header background */
-            padding: 15px;
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
             text-align: center;
-            color: #fff; /* White header text color */
+            margin-bottom: 20px;
         }
 
-        nav {
-            background-color: #333; /* Dark gray navigation bar background */
-            padding: 10px 0;
-            text-align: center;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        nav a {
-            display: inline-block;
-            margin: 0 20px;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #fff; /* White link text color */
-            background-color: #4CAF50; /* Green link background color */
-            border-radius: 5px; /* Rounded corners */
-            transition: background-color 0.3s ease; /* Smooth transition effect */
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        nav a:hover {
-            background-color: #45a049; /* Darker green on hover */
+        input[type="text"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        h1 {
-            text-align: center;
-            margin-top: 40px; /* Add some space between the header and the content */
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Exam Management System Office</main></h1>
-    </header>
-    
-    <nav>
-        <a href="{% url 'exam' %}">Exam Page</a>
-        <a href="{% url 'cpage' %}">Time Table</a>
-        <a href="{% url 'dutyAllotment' %}">Duty Allotment</a>
-        <a href="{% url 'preferTable' %}">Prefer Table</a>
-        <a href="{% url 'course' %}">Course</a>
-        <a href="{% url 'logout' %}">logout</a>
-    </nav>
+    <div class="container">
+        <h2>Office Module - Examination Management System</h2>
 
-    <!-- Your existing content goes here -->
+        <!-- Form for printing labels -->
+        <div class="form-group">
+            <h3>Print Exam Labels</h3>
+            <form>
+                <label for="exam-type">Select Exam Type:</label>
+                <select id="exam-type" name="exam-type">
+                    <option value="midterm">Midterm Exam</option>
+                    <option value="final">Final Exam</option>
+                    <!-- Add more exam types if needed -->
+                </select>
 
+                <label for="exam-date">Exam Date:</label>
+                <input type="text" id="exam-date" name="exam-date" placeholder="Enter exam date">
+
+                <button type="submit">Print Labels</button>
+            </form>
+        </div>
+
+        <!-- Form for generating exam report -->
+        <div class="form-group">
+            <h3>Generate Exam Report</h3>
+            <form>
+                <label for="report-type">Select Report Type:</label>
+                <select id="report-type" name="report-type">
+                    <option value="overall">Overall Performance</option>
+                    <option value="subject-wise">Subject-wise Performance</option>
+                    <!-- Add more report types if needed -->
+                </select>
+
+                <label for="exam-id">Exam ID:</label>
+                <input type="text" id="exam-id" name="exam-id" placeholder="Enter exam ID">
+
+                <button type="submit">Generate Report</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
