@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from .models import UserProfile
 from .models import *
 from datetime import datetime
 from django.views.generic.edit import CreateView
@@ -10,22 +11,37 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import Group,User
 @csrf_exempt
 def mylogin(request):
-    if request.method == 'POST':
+     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
+            user_type = user.userprofile.user_type
+            if user_type == 'chief':
+                return redirect('chief_dashboard')
+            elif user_type == 'teacher':
+                return redirect('teacher_dashboard')
+            elif user_type == 'staff':
+                return redirect('staff_dashboard')
+            elif user_type == 'admin':
+                return redirect('/admin/')
             messages.success(request, 'Login successful!')
-            return redirect('hello')
         else:
             messages.error(request, 'Invalid username or password.')
+     return render(request, 'exam/login.html')
 
-    return render(request, 'exam/login.html')   
+def chief_dashboard(request):
+    return render(request, 'exam/chief.html')
 
+def teacher_dashboard(request):
+    return render(request, 'exam/teacher.html')
 
+def staff_dashboard(request):
+    return render(request, 'exam/office.html')
 
+                  
 # Create your views here.
 @csrf_exempt
 def home(request):

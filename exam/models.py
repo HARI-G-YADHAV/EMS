@@ -1,5 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+class UserProfile(models.Model):
+
+    USER_TYPE_CHOICES = [
+        ('chief', 'Chief'),
+        ('teacher', 'Teacher'),
+        ('staff', 'Staff'),
+        ('admin', 'Admin'),
+    ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
+
+    def __str__(self):
+        return self.user.username
 # Create your models here.
 class Exam(models.Model):
     sem=models.IntegerField()
