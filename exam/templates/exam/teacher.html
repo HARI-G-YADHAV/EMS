@@ -3,62 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Teacher Dashboard</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8; /* Light gray background */
-            color: #333; /* Dark gray text color */
+            background-color: #f0f0f0;
         }
-
-        header {
-            background-color: #051219; /* Green header background */
-            padding: 15px;
+        .container {
+            max-width: 700px;
+            margin:150px auto;
             text-align: center;
-            color: #fff; /* White header text color */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
-        nav {
-            background-color:  #e9c6c6; /* Dark gray navigation bar background */
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        nav a {
-            display: inline-block;
-            margin: 0 20px;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #fff; /* White link text color */
-            background-color: #4CAF50; /* Green link background color */
-            border-radius: 5px; /* Rounded corners */
-            transition: background-color 0.3s ease; /* Smooth transition effect */
-        }
-
-        nav a:hover {
-            background-color: #45a049; /* Darker green on hover */
-        }
-
         h1 {
-            text-align: center;
-            margin-top: 40px; /* Add some space between the header and the content */
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .logout {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        .logout:hover {
+            background-color: #d32f2f;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Exam Management System Teachers</main></h1>
-    </header>
-    
-    <nav>
- 
-        <a href="{% url 'timetb' %}">Prefer Table</a>
-        <a href="{% url 'logout' %}">logout</a>
-    </nav>
-
-    <!-- Your existing content goes here -->
-
+    <div class="container">
+        <h1>Teacher Dashboard</h1>
+        <div class="section">
+            <a href="uploading_preference.html" class="button">Upload Preferences</a>
+            <a href="view_summary.html" class="button">View Summary</a>
+        </div>
+        <div>
+            <a href="{% url 'logout' %}" class="logout">Logout</a>
+        </div>
+    </div>
 </body>
 </html>

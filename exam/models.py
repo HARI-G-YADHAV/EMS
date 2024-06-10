@@ -1,6 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# models.py
+from django.utils import timezone
+
+class Timetable(models.Model):
+    exam = models.CharField(max_length=100, default='')
+    course_code = models.CharField(max_length=20, default='')
+    department = models.CharField(max_length=100, default='')
+    date = models.DateField(default=timezone.now)
+    time_from = models.TimeField(default=timezone.now)
+    time_to = models.TimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.exam  # You can choose any field to represent the object in admin or elsewhere
+
+
+
 # Create your models here.
 class Exam(models.Model):
     sem=models.IntegerField()
@@ -82,12 +98,3 @@ class preferTable(models.Model):
     date=models.DateField()
 
 
-class Timetable(models.Model):
-    exam_id=models.IntegerField()
-    date=models.DateField()
-    course_id=models.IntegerField()
-
-class Optedtb(models.Model):
-    date=models.DateField()
-    user_id=models.IntegerField()
-    user_name=models.CharField(max_length=40)
