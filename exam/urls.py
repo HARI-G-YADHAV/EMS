@@ -11,9 +11,14 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(),name='logout'),
 
 
-    path('exam/',views.exam,name='exam'),
+    path('exam_view/',views.exam,name='exam_view'),
+    path('get-courses/', views.get_courses, name='get_courses'),
+
     path('allot_duty/',views.allot_duty,name='allot_duty'),
     path('edit_teacher',views.edit_teacher,name='edit_teacher'),
+
+    path('uploading_preference/', views.exam_table, name='uploading_preference'),
+    path('announce_exam/', views.announce_exam, name='announceExam'),
 
     
 ]

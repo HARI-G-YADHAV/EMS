@@ -1,34 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# models.py
-from django.utils import timezone
-
-class Timetable(models.Model):
-    exam = models.CharField(max_length=100, default='')
-    course_code = models.CharField(max_length=20, default='')
-    department = models.CharField(max_length=100, default='')
-    date = models.DateField(default=timezone.now)
-    time_from = models.TimeField(default=timezone.now)
-    time_to = models.TimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.exam  # You can choose any field to represent the object in admin or elsewhere
-
-
-
 # Create your models here.
 class Exam(models.Model):
-    sem=models.IntegerField()
-    year=models.IntegerField()
-    month=models.CharField(max_length=20)
-    grad_level=models.CharField(max_length=20)
+    sem = models.IntegerField()
+    year = models.IntegerField()
+    month = models.CharField(max_length=20)
+    grad_level = models.CharField(max_length=20)
+    date = models.DateField(default="2020-01-01")
 
     def __str__(self):
         return self.grad_level
 
 class Department(models.Model):
-    dept_id = models.IntegerField()
+    dept_id = models.IntegerField(primary_key=True)
     dept_name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -48,26 +33,32 @@ class Course(models.Model):
     course_id = models.IntegerField()
     course_title = models.CharField(max_length=50)
     dept=models.ForeignKey(Department,on_delete=models.CASCADE)
-    Syllabus_year = models.IntegerField()
+    syllabus_year = models.IntegerField()
     course_code= models.CharField(max_length=20)
-
+    grad_level = models.CharField(max_length=2, default="UG")
+    semester = models.IntegerField()
+    lab_theory = models.CharField(max_length=2, default="T")
+                                  
     def __str__(self):
         return self.course_title
 
 class ExamTimeTable(models.Model):
-    exam=models.ForeignKey(Exam,on_delete=models.CASCADE)
+    #exam=models.ForeignKey(Exam,on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Course,models.CASCADE)
     dept=models.ForeignKey(Department,on_delete=models.CASCADE)
     date=models.DateField()
-    time_from = models.DateTimeField()
-    time_to = models.DateTimeField()
-    course_id = models.ForeignKey(Course,models.CASCADE)
+    time_from = models.TimeField()
+    time_to = models.TimeField()
+    #grad_level = models.CharField(max_length=2, default="UG")
+    semester = models.IntegerField()
 
     def __str__(self):
-        return self.exam
+        return self.course_id.course_title
 
 
 class teacherTable(models.Model):
     teacher_id=models.IntegerField()
+    #teacher_acc = models.ForeignKey(User, on_delete=models.CASCADE)
     dept_id=models.IntegerField()
     name=models.CharField(max_length=40)
     designation=models.CharField(max_length=40)
@@ -98,3 +89,7 @@ class preferTable(models.Model):
     date=models.DateField()
 
 
+class Timetable(models.Model):
+    exam_id=models.IntegerField()
+    date=models.DateField()
+    course_id=models.IntegerField()
