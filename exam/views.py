@@ -11,6 +11,7 @@ from django.contrib.auth.models import Group,User
 from .models import Timetable  # Import your model
 from .forms import ExamAnnounce
 from .models import Course, Department, ExamTimeTable
+from .models import Exam
 
 @csrf_exempt
 def mylogin(request):
@@ -135,7 +136,7 @@ def edit_teacher(request):
 
 
 def exam_table(request):
-    timetable_entries = Timetable.objects.all()
+    timetable_entries = ExamTimeTable.objects.all()
 
     if request.method == "POST":
         # If the form is submitted
@@ -170,3 +171,14 @@ def announce_exam(request):
     else:
         form = ExamAnnounce()
     return render(request, 'exam/announceExam.html', {'form': form})
+
+def teacher_dashboard(request):
+    latest_exams = Exam.objects.order_by('-date')[:4]
+    return render(request, 'exam/teacher.html', {'latest_exams': latest_exams})
+
+
+def view_alloted_duty(request):
+    return render(request, 'exam/view_alloted_duty.html')
+
+def view_summary(request):
+    return render(request, 'exam/view_summary.html')

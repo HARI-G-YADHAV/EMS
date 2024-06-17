@@ -97,12 +97,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Exam</th>
-                    <th>Course code</th>
-                    <th>Department</th>
                     <th>Date</th>
-                    <th>Sem</th>
-                    <th>Grad level</th>
                     <th>Time from</th>
                     <th>Time to</th>
                 </tr>
@@ -110,12 +105,7 @@
             <tbody id="examtable">
                 {% for entry in timetable_entries %}
                 <tr>
-                    <td>{{ entry.exam }}</td>
-                    <td>{{ entry.course_code }}</td>
-                    <td>{{ entry.department }}</td>
                     <td>{{ entry.date }}</td>
-                    <td>{{ entry.sem }}</td>
-                    <td>{{ entry.grad_level }}</td>
                     <td>{{ entry.time_from }}</td>
                     <td>{{ entry.time_to }}</td>
                 </tr>

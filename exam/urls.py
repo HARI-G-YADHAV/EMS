@@ -19,6 +19,8 @@ urlpatterns = [
 
     path('uploading_preference/', views.exam_table, name='uploading_preference'),
     path('announce_exam/', views.announce_exam, name='announceExam'),
+    path('view_alloted_duty/',views.view_alloted_duty,name='view_alloted_duty'),
+    path('view_summary/',views.view_summary,name='view_summary'),
 
     
 ]

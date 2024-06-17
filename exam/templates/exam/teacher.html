@@ -13,7 +13,7 @@
         }
         .container {
             max-width: 700px;
-            margin:150px auto;
+            margin: 150px auto;
             text-align: center;
             background-color: #fff;
             padding: 20px;
@@ -67,11 +67,27 @@
         <h1>Teacher Dashboard</h1>
         <div class="section">
             <a href="{% url 'uploading_preference' %}" class="button">Uploading Preference</a>
-            <a href="view_summary.html" class="button">View Summary</a>
+            <a href="{% url 'view_alloted_duty' %}" class="button">Alloted Duty</a>
+            <a href="{% url 'view_summary' %}" class="button">View Summary</a>
         </div>
         <div>
             <a href="{% url 'logout' %}" class="logout">Logout</a>
         </div>
     </div>
+    {% if latest_exams %}
+        <div class="container">
+            <p>Latest Exams Announced:</p>
+            {% for exam in latest_exams %}
+                <div style="margin-bottom: 20px;">
+                    <p>The Semester {{ exam.sem }} exam for {{ exam.grad_level }} students is scheduled to take place on {{ exam.date }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="container">
+            <p>No exams announced yet.</p>
+        </div>
+    {% endif %}
+
 </body>
 </html>

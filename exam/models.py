@@ -1,3 +1,4 @@
+print("Loading models...")
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -57,14 +58,10 @@ class ExamTimeTable(models.Model):
 
 
 class teacherTable(models.Model):
-    teacher_id=models.IntegerField()
-    #teacher_acc = models.ForeignKey(User, on_delete=models.CASCADE)
-    dept_id=models.IntegerField()
-    name=models.CharField(max_length=40)
-    designation=models.CharField(max_length=40)
-
-    def __str__(self):
-        return self.name
+    teacher_id = models.IntegerField()
+    dept_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    name = models.CharField(max_length=40)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
 class room(models.Model):
     room_id=models.IntegerField()
