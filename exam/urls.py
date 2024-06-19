@@ -14,14 +14,14 @@ urlpatterns = [
     path('exam_view/',views.exam,name='exam_view'),
     path('get-courses/', views.get_courses, name='get_courses'),
 
-    path('allot_duty/',views.allot_duty,name='allot_duty'),
     path('edit_teacher',views.edit_teacher,name='edit_teacher'),
 
-    path('uploading_preference/', views.exam_table, name='uploading_preference'),
+    
     path('announce_exam/', views.announce_exam, name='announceExam'),
     path('view_alloted_duty/',views.view_alloted_duty,name='view_alloted_duty'),
     path('view_summary/',views.view_summary,name='view_summary'),
+    path('upload_preferences/', views.upload_preferences, name='upload_preferences'),
 
-    
+    path('allot_duty/', views.allot_duty, name='allot_duty'),
 ]
 

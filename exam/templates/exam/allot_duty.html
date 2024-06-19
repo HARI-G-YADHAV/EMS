@@ -3,110 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duty Allotment</title>
+    <title>Teacher Preferences and Duty Allocation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        .section {
-            margin-top: 20px;
-        }
-        select, button {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            margin: 20px;
         }
         table {
-            width: 100%;
+            background-color: #ffffff;
             border-collapse: collapse;
-            margin-top: 20px;
+            width: 100%;
+            margin: 10px 0;
         }
         th, td {
-            padding: 10px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            padding: 8px;
+            border: 1px solid #dddddd;
         }
         th {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #f2f2f2;
-        }
-        .button {
-            background-color: #4CAF50;
+            background-color: #007bff;
             color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #45a049;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Duty Allotment</h1>
-        <div class="section">
-            <label for="exam">Select Exam:</label>
-            <select name="exam" id="exam">
-                <option value="Data Structure">Data Structure</option>
-                <option value="Web Technology">Web Technology</option>
-                <option value="Python">Python</option>
-                <!-- Add more options as needed -->
-            </select>
-        </div>
-        <div class="section">
-            <h2>Teacher Preferences</h2>
-            <table id="preferences">
-                <thead>
-                    <tr>
-                        <th>Teacher</th>
-                        <th>Preference</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Teacher 1</td>
-                        <td>First Preference</td>
-                    </tr>
-                    <tr>
-                        <td>Teacher 2</td>
-                        <td>Second Preference</td>
-                    </tr>
-                    <!-- Add more rows as needed -->
-                </tbody>
-            </table>
-        </div>
-        <div class="section">
-            <h2>Allot Preferred Date</h2>
-            <form id="allotment-form">
-                <label for="teacher">Select Teacher:</label>
-                <select name="teacher" id="teacher">
-                    <option value="Teacher 1">Teacher 1</option>
-                    <option value="Teacher 2">Teacher 2</option>
-                    <!-- Add more options as needed -->
-                </select>
-                <label for="date">Select Date:</label>
-                <input type="date" name="date" id="date">
-                <button type="submit" class="button">Allot Date</button>
-            </form>
-        </div>
+        <h1 class="my-4 text-center"><b>Allocate Duty</b></h1>
+
+        {% for exam_date, preferences in exam_dates.items %}
+        <h5>Exam Date: {{ exam_date }}</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Teacher Name</th>
+                    <th>Preferred Date</th>
+                    <th>Allocate Duty</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for preference in preferences %}
+                <tr>
+                    <td>{{ preference.teacher_id.username }}</td>
+                    <td>{{ preference.date }}</td>
+                    <td>
+                        <form method="post" action="{% url 'allot_duty' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="teacher_id" value="{{ preference.teacher_id.id }}">
+                            <input type="hidden" name="course_id" value="{{ preference.course_id_id }}">
+                            <input type="hidden" name="date" value="{{ preference.date }}">
+                            <select name="room_id" class="form-control" required>
+                                <option value="">Select Room</option>
+                                <!-- Replace with your room options -->
+                                <option value="1">Room 1</option>
+                                <option value="2">Room 2</option>
+                                <option value="3">Room 3</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary mt-2">Allocate</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+        <a href="{% url 'chief_dashboard' %}" class="btn btn-secondary back-button">Back to Chief Dashboard</a>
     </div>
 </body>
 </html>

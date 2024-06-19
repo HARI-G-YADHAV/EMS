@@ -6,77 +6,68 @@
     <title>Upload Preferences</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            padding: 40px;
+            margin: 0;
         }
         .container {
-            max-width: 800px;
+            max-width: 600px;
             background-color: #fff;
-            padding: 30px;
+            padding: 40px;
             margin: 0 auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-top: 5px solid #007bff;
         }
         h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #333;
+            color: #007bff;
         }
         .form-group {
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f1f1;
         }
         label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
+            font-weight: normal;
+            color: #333;
         }
-        select {
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
-        input[type=submit] {
-            background-color: #4CAF50;
+        input[type="submit"] {
+            background-color: #007bff;
             color: white;
             padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-        }
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-        table {
             width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
+            margin-top: 20px;
         }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-            color: #333;
+        input[type="submit"]:hover {
+            background-color: #0056b3;
         }
         .back-button {
             margin-top: 20px;
             text-align: center;
         }
         .back-button a {
-            background-color: #ccc;
+            background-color: #6c757d;
             padding: 10px 20px;
             text-decoration: none;
-            color: #333;
+            color: white;
             border-radius: 4px;
             transition: background-color 0.3s ease;
         }
         .back-button a:hover {
-            background-color: #bbb;
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -85,37 +76,22 @@
         <h2>Upload Preferences</h2>
         
         <!-- Form for uploading preferences with date selection -->
-        <form action="/upload-preferences" method="post">
+        <form action="{% url 'upload_preferences' %}" method="post">
             {% csrf_token %}
+            {% for entry in timetable_entries %}
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="selected_exams" value="{{ entry.id }}">
+                    {{ entry.date }} - {{ entry.time_from }} to {{ entry.time_to }}
+                </label>
+            </div>
+            {% endfor %}
             <div class="form-group">
                 <input type="submit" value="Upload Preferences">
             </div>
         </form>
-
-        <!-- Table to display latest uploaded exams and dates -->
-        <h2>Latest Uploaded Exams</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time from</th>
-                    <th>Time to</th>
-                </tr>
-            </thead>
-            <tbody id="examtable">
-                {% for entry in timetable_entries %}
-                <tr>
-                    <td>{{ entry.date }}</td>
-                    <td>{{ entry.time_from }}</td>
-                    <td>{{ entry.time_to }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <!-- Button to go to the previous page -->
         <div class="back-button">
-            <a href="/teacher_dashboard/">Go Back</a>
+            <a href="{% url 'teacher_dashboard' %}">Back to Home</a>
         </div>
     </div>
 </body>

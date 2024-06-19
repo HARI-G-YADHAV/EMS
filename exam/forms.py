@@ -1,7 +1,8 @@
 from django import forms
 from .models import preferTable, Course
-from .models import  Department
-from .models import Exam
+from .models import Exam,ExamTimeTable
+from .models import dutyAllotment
+
 
 # class ExamTimeTable(forms.ModelForm):
 #      class Meta:
@@ -37,5 +38,8 @@ class ExamAnnounce(forms.ModelForm):
             ])
         }
 
-
-
+# class dutyAllotmentForm(forms.Form):
+#     course = forms.ModelChoiceField(queryset=ExamTimeTable.objects.all())
+#     date = forms.DateField()
+#     max_teachers = forms.IntegerField(min_value=1, label="Max Teachers per Day")
+    

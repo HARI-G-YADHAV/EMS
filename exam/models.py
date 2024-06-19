@@ -70,19 +70,14 @@ class room(models.Model):
     location=models.CharField(max_length=40)
 
     def __str__(self):
-        return self.room_id
+        return str(self.room_id)
 
-class dutyAllotment(models.Model):
-    teacher_id=models.ForeignKey(teacherTable,on_delete=models.CASCADE)
-    exam_id=models.ForeignKey(Exam,on_delete=models.CASCADE)
-    course = models.ForeignKey(Course,on_delete=models.CASCADE)
-    date=models.DateField()
-    room_id=models.ForeignKey(room,on_delete=models.CASCADE)
+
     
 
 class preferTable(models.Model):
-    teacher_id=models.IntegerField()
-    exam_id=models.IntegerField()
+    teacher_id = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
+    course_id = models.ForeignKey(ExamTimeTable,default=1, on_delete=models.CASCADE)
     date=models.DateField()
 
 
@@ -90,3 +85,10 @@ class Timetable(models.Model):
     exam_id=models.IntegerField()
     date=models.DateField()
     course_id=models.IntegerField()
+
+
+class dutyAllotment(models.Model):
+    teacher_id = models.ForeignKey(teacherTable, default=1, on_delete=models.CASCADE)
+    course_id=models.ForeignKey(Exam,on_delete=models.CASCADE)
+    date=models.DateField()
+    room_id=models.ForeignKey(room,on_delete=models.CASCADE)

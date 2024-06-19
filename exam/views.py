@@ -12,6 +12,15 @@ from .models import Timetable  # Import your model
 from .forms import ExamAnnounce
 from .models import Course, Department, ExamTimeTable
 from .models import Exam
+from .models import ExamTimeTable, preferTable
+from django.contrib.auth.decorators import login_required
+from .forms import PreferTableForm
+from django.shortcuts import render, redirect
+from django.db.models import Count
+from .models import  dutyAllotment, teacherTable, ExamTimeTable, room
+# from .forms import dutyAllotmentForm
+
+
 
 @csrf_exempt
 def mylogin(request):
@@ -123,10 +132,7 @@ def exam(request):
         #form = ExamTimeTable()  # Assuming you have a form for validation
         return render(request, "exam/exam.html", context)
 
-def allot_duty(request):
-    exams = Exam.objects.all()
-    print(list(exams))
-    return render(request, 'exam/allot_duty.html', {'exams': exams})
+
 
 
 
@@ -182,3 +188,60 @@ def view_alloted_duty(request):
 
 def view_summary(request):
     return render(request, 'exam/view_summary.html')
+
+
+@login_required
+def upload_preferences(request):
+    if request.method == 'POST':
+        # Process form submission
+        teacher_id = request.user.id  # Get the logged-in teacher's user ID
+        selected_exams = request.POST.getlist('selected_exams')
+
+        for exam_id in selected_exams:
+            exam = ExamTimeTable.objects.get(id=exam_id)
+            prefer_entry = preferTable(teacher_id_id=teacher_id, course_id_id=exam.id, date=exam.date)
+            prefer_entry.save()
+
+        return redirect('teacher_dashboard')  # Redirect to teacher dashboard or appropriate URL
+    else:
+        # Render the page with latest uploaded exams
+        timetable_entries = ExamTimeTable.objects.all()  # Retrieve all entries or filter as needed
+        return render(request, 'exam/uploading_preference.html', {'timetable_entries': timetable_entries})
+    
+
+
+def allot_duty(request):
+    if request.method == 'POST':
+        teacher_id = request.POST.get('teacher_id')
+        course_id = request.POST.get('course_id')
+        date = request.POST.get('date')
+        room_id = request.POST.get('room_id')
+
+        teacher = teacherTable.objects.get(id=teacher_id)
+        course = ExamTimeTable.objects.get(id=course_id)
+        
+
+        duty = dutyAllotment(
+            teacher_id=teacher,
+            course_id=course,
+            date=date,
+            
+        )
+        duty.save()
+
+        return redirect('chief_dashboard')
+
+    preferences = preferTable.objects.select_related('teacher_id', 'course_id').all()
+    
+    # Group preferences by exam date
+    exam_dates = {}
+    for preference in preferences:
+        exam_date = preference.course_id.date
+        if exam_date not in exam_dates:
+            exam_dates[exam_date] = []
+        exam_dates[exam_date].append(preference)
+    
+    context = {
+        'exam_dates': exam_dates,
+    }
+    return render(request, 'exam/allot_duty.html', context)
